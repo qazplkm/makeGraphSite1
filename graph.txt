@@ -1,0 +1,14 @@
+BarChart : 항목, 숫자                    ##### 예시) 항목(국가), 숫자(gdp)
+Doughnut and Pie charts: 항목, 숫자      ##### 예시) 항목(국가), 숫자(gdp)
+Line chart: 항목, 숫자                   ##### 예시) 항목(국가), 숫자(gdp)
+Polar Area chart: 항목, 숫자             ##### 예시) 항목(국가), 숫자(gdp)
+
+Mixed chart Types: 항목, 숫자, 숫자      ##### 예시) 항목(국가), 숫자(gdp), 숫자(인구수)
+
+
+Rader Chart : 항목, 세부항목, 숫자       ##### 예시) 항목(각각성능기준), 세부항목(자동차), 숫자(점수)
+
+
+
+
+

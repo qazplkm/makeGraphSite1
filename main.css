@@ -1,0 +1,69 @@
+.container{
+    background-color: #eee;
+    box-sizing: border-box;
+    margin-top: 70px;
+    margin-bottom: 15px;
+    padding-top: 50px;
+    padding-bottom: 1px;
+}
+.div{
+    margin-top: 10px;
+}
+
+#myChart{
+    width: 100%;
+}
+.top-wrap{
+    position: sticky;
+    top:0;
+    z-index: 4;
+    width: 100%;
+    height: 70px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* color: white; */
+    transition: all 1s;
+}
+.data-container{
+    position:fixed;
+    z-index: 5;
+    background-color: black;
+    opacity: 0.5;
+    width: 100vw;
+    height: 100vh;
+    color: white;      
+    transition: all 1s;
+}
+.data-container-position{
+    width: 100vw;
+    height: 100vh;
+}
+.databox{
+    max-width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+}
+.data-container-foot{
+    position: absolute;
+    bottom:  15px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: all 1s;
+}
+.chart-container{    
+    transform: scale(1);
+    background-color: white;
+}
+#myChart{
+    width: 100%;
+    height: 100%;
+}
+.up100{
+    transform:translateY(-100%)
+}
+.hide{
+    display: none;
+}
