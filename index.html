@@ -17,7 +17,7 @@
   <body>
 
     <div class="top-wrap hide">
-      <h4>그래프 자세히보기</h4>
+      <h5>그래프 자세히보기</h5>
     </div>
 
     
@@ -25,7 +25,11 @@
       <div class="data-container-position">
         <div class="databox">
           <div>
-            <h1>그래프를 만들어보자</h1>
+            <h3>그래프를 만들어보자</h3>
+            <p>투명도 조절
+              <input id="opacity-control" type="range" min="3" max="10" step="0.5"
+              value="5">
+            </p>
           </div>
 
           <div>
@@ -33,6 +37,9 @@
             <select id="GraphFormType">
               <option>선그래프</option>
               <option>바그래프</option>              
+              <option>도넛그래프</option>              
+              <option>파이그래프</option>              
+              <option>폴라그래프</option>              
             </select>
             <button type="button" class="btn btn-primary" id="GraphFormTypeBtn">그래프모양선택</button>
             <!-- <button id="GraphFormTypeBtn">그래프모양선택</button> -->
@@ -55,16 +62,18 @@
     </div>  
     
 
-    <div class="container">
-      <button id="screenShot">그래프스샷</button>
+    <div class="container">      
+      <button id="screenShot" type="button" class="btn btn-secondary">그래프스샷</button>
 
-      <div class="chart-container">
+      <div class="chart-container" id="test-reload">
         <canvas id="myChart"></canvas>
+        <!-- <canvas id="myChart2" class="hide"></canvas> -->
       </div>
-    </div>
+    </div>    
     
     <script type="module">    
-    import {선그래프, 바그래프} from './graphTypes.js'  
+    import 그래프타입들 from './graphTypes.js' 
+      
 
       let graph = document.querySelector("#myChart");      
       // 그래프 인풋창 여닫기
@@ -72,32 +81,51 @@
       let dataContainer = document.querySelector(".data-container");
       let dataContainerFoot = document.querySelector(".data-container-foot");
       
+      
       dataContainerFoot.addEventListener('click',function(){
         dataContainer.classList.remove('up100');
         topWrap.classList.remove('hide');
         dataContainerFoot.className += ' hide'
+        screenShot.className += ' hide'
       })
       
       topWrap.addEventListener('click',function(){
         topWrap.className += ' hide';
         dataContainer.className += ' up100';
         dataContainerFoot.classList.remove('hide');
+        screenShot.classList.remove('hide')
       })
+
+      
 
       // 그래프 형태 선택 및 뒤로가기
-      let 그래프형태 = 선그래프;
+      let 그래프형태 = 그래프타입들.선그래프;
       let 그래프모양선택버튼 = document.getElementById('GraphFormTypeBtn');
       let 선택된그래프모양 = document.getElementById('GraphFormType');
-        // 만약 그래프형태를 선택하고 다음버튼을 누르면 그래프형태를 그에 해당하는 그래프변수로 바꿈,
-        // 그리고 그래프에 해당되는 변수를 만듬
-      그래프모양선택버튼.addEventListener('click',function(){
-        그래프형태 = 선택된그래프모양;
-        chartContainer.innerHTML = `<canvas id="myChart"></canvas>`;
 
-      })
+      // 그래프 차트
+      var ctx = document.getElementById("myChart").getContext("2d");
+      var newChart = new Chart(ctx, 그래프형태);
+
+        // 만약 그래프형태를 선택하고 다음버튼을 누르면 그래프형태를 그에 해당하는 그래프변수로 바꿈,
+        // 그리고 그래프에 해당되는 변수를 만듬      
         
+      그래프모양선택버튼.addEventListener('click',function(){        
+
+        
+        그래프형태 = 그래프타입들[선택된그래프모양.value];
+
+        chartContainer.innerHTML = `<canvas id="myChart"></canvas>`;
+        var ctx = document.getElementById("myChart").getContext("2d");
+        var newChart = new Chart(ctx, 그래프형태);               
+       
+      })  
       
-      
+      // 인풋창 투명도
+      let opacityControl = document.getElementById('opacity-control');
+      opacityControl.addEventListener('input',function(e){
+        dataContainer.style.opacity = e.target.value/10       
+      })
 
       // 그래프데이타 인풋
       let graphName = document.getElementById("graph-name");
@@ -107,6 +135,8 @@
       // 숫자입력칸 경고
         // 그래프크기
       let chartContainer = document.querySelector('.chart-container');
+      let myChart = document.querySelector('#myChart');
+      
       graphSize.addEventListener('input',function(){
         if(graphSize.value == ''){
           alert('숫자만입력하세요')
@@ -169,9 +199,7 @@
       }
 
 
-      // 그래프 차트
-      var ctx = document.getElementById("myChart").getContext("2d");
-      var myChart = new Chart(ctx, 그래프형태);
+      
     </script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
