@@ -200,8 +200,14 @@ import 그래프타입들 from './graphTypes.js'
             alert('항목수를 선택하시오')
         }else{
             for(let i=0;i<parseInt(selectGraphArticle.value);i++){
-                // 그래프형태.data.labels[i] = inputArticle
+                newChart.data.labels[i] = listArticles[i].value;
+                newChart.data.datasets[0].data[i] = parseFloat(listValues[i].value);
+                newChart.data.datasets[0].backgroundColor[i] = listColors[i].value;
+                console.log(listArticles[i].value);
+                console.log(parseFloat(listValues[i].value));
+                console.log(listColors[i].value);
             }
+            
             그래프사이즈조정(); 
             newChart.update();
         }
