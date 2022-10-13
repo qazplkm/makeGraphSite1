@@ -24,7 +24,18 @@ let 그래프타입들={
       ],
       // datasets 이 부분을 조작하시면 차트 아이템의 제목, 배경색, 테두리색, 데이터값을 각각 수정하실 수 있습니다.
   },
-  options: {},
+  options: {
+    scales: {
+      yAxes: [{
+          display: true,
+          ticks: {
+              suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
+              // OR //
+              beginAtZero: true   // minimum value will be 0.
+          }
+      }]
+    }
+  },
   },
 
   바그래프 :
@@ -67,11 +78,21 @@ let 그래프타입들={
       },
       
       options: {
-      scales: {
-          y: {
-          beginAtZero: true
-          }
-      }
+      // scales: {
+      //     y: {
+      //     beginAtZero: true
+      //     }
+      // }
+        scales: {
+          yAxes: [{
+              display: true,
+              ticks: {
+                  suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
+                  // OR //
+                  beginAtZero: true   // minimum value will be 0.
+              }
+          }]
+        }
       },
   },
 

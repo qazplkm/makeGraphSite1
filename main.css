@@ -1,3 +1,22 @@
+div{
+    margin-top: 10px;
+}
+p{
+    margin-top: 1rem;
+    margin-bottom: 1px;
+}
+table{
+    color: black;
+    background-color: #eee;
+    border-style: hidden;
+    border-radius: 5px;
+    box-shadow: 0 0 0 1px #000;
+}
+th{
+    text-align: center;
+}
+
+
 .container{
     background-color: #eee;
     box-sizing: border-box;
@@ -6,9 +25,7 @@
     padding-top: 50px;
     padding-bottom: 1px;
 }
-.div{
-    margin-top: 10px;
-}
+
 
 #myChart{
     width: 100%;
