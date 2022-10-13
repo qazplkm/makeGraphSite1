@@ -169,7 +169,10 @@ import 그래프타입들 from './graphTypes.js'
     // 버튼을 누르면 정해진 그래프 모양으로 그래프형태를 바뀌고 차트창을 다시보여줌
     그래프모양선택버튼.addEventListener('click',function(){          
 
-        selectGraphArticle.value = '선택'    
+        selectGraphArticle.value = '선택';
+        if(selectGraphArticle.value == '선택'){
+            graphDataList.innerHTML = "";
+        }    
         그래프형태 = 그래프타입들[선택된그래프모양.value];
 
         chartContainer.innerHTML = `<canvas id="myChart"></canvas>`;
