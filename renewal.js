@@ -34,6 +34,8 @@ import 그래프타입들 from './graphTypes.js'
     let listValues = [];
     // 그래프데이터 색상들의 변수들 저장할곳
     let listColors = [];
+
+    let 그래프전체색깔 = document.getElementById('one-color');
     
     let graphDataList = document.getElementById('graph-data-list');
     // 그래프canvas container
@@ -48,18 +50,22 @@ import 그래프타입들 from './graphTypes.js'
 
     // 그래프모양 필수생성키(변수외형)
     var ctx = document.getElementById("myChart").getContext("2d");
-    var newChart = new Chart(ctx, 그래프형태);
+    var newChart = new Chart(ctx, 그래프형태);    
 
 // 2, 함수들(따로 이름이 정의된 함수)    
 
-    // 그래프 항목수 변경이 되면 변경된 갯수에 맞게 항목수와 데이터를 임시로 만들어서 넣어준다
-    function 항목수데이터리스트생성및임시변수설정(){
+    function 데이터리스트생성시비우기(){
         그래프형태.data.labels =[];
         그래프형태.data.datasets[0].data =[];
         graphDataList.innerHTML = ``;
         listArticles = [];
         listValues = [];
         listColors = [];
+    }
+
+    // 그래프 항목수 변경이 되면 변경된 갯수에 맞게 항목수와 데이터를 임시로 만들어서 넣어준다
+    function 보통그래프일때항목수데이터리스트생성및임시변수설정(){        
+        데이터리스트생성시비우기()
         for(let i=0;i<parseInt(selectGraphArticle.value);i++){
             그래프형태.data.labels[i] = `항목${i}`
             그래프형태.data.datasets[0].data[i] = (i*10)+(10*(i%3)+10)
@@ -81,6 +87,32 @@ import 그래프타입들 from './graphTypes.js'
             eval(`listArticles[${i}] = inputArticle${i}`);
             eval(`listValues[${i}] = inputValue${i}`);
             eval(`listColors[${i}] = inputColor${i}`);
+        }        
+    }
+
+    function 선그래프일때항목수데이터리스트생성및임시변수설정(){        
+        데이터리스트생성시비우기()
+        for(let i=0;i<parseInt(selectGraphArticle.value);i++){
+            그래프형태.data.labels[i] = `항목${i}`
+            그래프형태.data.datasets[0].data[i] = (i*10)+(10*(i%3)+10)
+            let 리스트모양 = `<tr>
+                <td>
+                <input id="inputArticle${i}" type="text">
+                </td>   
+                <td>
+                <input id="inputValue${i}" type="number">
+                </td>       
+                <td>
+                <p class="show-selected-color"></p>
+                </td>              
+            </tr>`
+            graphDataList.insertAdjacentHTML('beforeend',리스트모양);
+            eval(`let inputArticle${i} = document.getElementById('inputArticle${i}')`);
+            eval(`let inputValue${i} = document.getElementById('inputValue${i}')`);
+            
+            eval(`listArticles[${i}] = inputArticle${i}`);
+            eval(`listValues[${i}] = inputValue${i}`);
+            
         }        
     }
 
@@ -155,8 +187,13 @@ import 그래프타입들 from './graphTypes.js'
     // 만약 그래프 항목수 변경을 하면 항목수임시변경을 한후 생성된 임시항목과 데이터를 차트에 적용시켜서 보여준다.   
     selectGraphArticle.addEventListener('change',function(e){
       
-    //   항목수임시변수설정()
-      항목수데이터리스트생성및임시변수설정()
+        //   항목수임시변수설정()
+      if(그래프형태 == 그래프타입들.선그래프){
+        선그래프일때항목수데이터리스트생성및임시변수설정()
+      }else{
+        보통그래프일때항목수데이터리스트생성및임시변수설정()
+      }
+      
       console.log(그래프형태.data.labels)
       console.log(그래프형태.data.datasets[0].data)
       
@@ -174,6 +211,12 @@ import 그래프타입들 from './graphTypes.js'
             graphDataList.innerHTML = "";
         }    
         그래프형태 = 그래프타입들[선택된그래프모양.value];
+
+        if(그래프형태 == 그래프타입들.선그래프){
+            그래프전체색깔.classList.remove('hide');
+        }else{
+            그래프전체색깔.className += 'hide';
+        }
 
         chartContainer.innerHTML = `<canvas id="myChart"></canvas>`;
         ctx = document.getElementById("myChart").getContext("2d");
@@ -199,14 +242,24 @@ import 그래프타입들 from './graphTypes.js'
         if(selectGraphArticle.value == '선택'){
             alert('항목수를 선택하시오')
         }else{
-            for(let i=0;i<parseInt(selectGraphArticle.value);i++){
-                newChart.data.labels[i] = listArticles[i].value;
-                newChart.data.datasets[0].data[i] = parseFloat(listValues[i].value);
-                newChart.data.datasets[0].backgroundColor[i] = listColors[i].value;
-                console.log(listArticles[i].value);
-                console.log(parseFloat(listValues[i].value));
-                console.log(listColors[i].value);
+            if(그래프형태 == 그래프타입들.선그래프){
+                for(let i=0;i<parseInt(selectGraphArticle.value);i++){
+                    newChart.data.labels[i] = listArticles[i].value;
+                    newChart.data.datasets[0].data[i] = parseFloat(listValues[i].value);                               
+                }
+                newChart.data.datasets[0].backgroundColor = 그래프전체색깔.value;
+            }else{
+                for(let i=0;i<parseInt(selectGraphArticle.value);i++){
+                    newChart.data.labels[i] = listArticles[i].value;
+                    newChart.data.datasets[0].data[i] = parseFloat(listValues[i].value);
+                    newChart.data.datasets[0].backgroundColor[i] = listColors[i].value;                
+                }
             }
+            // for(let i=0;i<parseInt(selectGraphArticle.value);i++){
+            //     newChart.data.labels[i] = listArticles[i].value;
+            //     newChart.data.datasets[0].data[i] = parseFloat(listValues[i].value);
+            //     newChart.data.datasets[0].backgroundColor[i] = listColors[i].value;                
+            // }
             
             그래프사이즈조정(); 
             newChart.update();
